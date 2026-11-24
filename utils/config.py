@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 import requests
 import tweepy
@@ -12,12 +13,12 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-# Twitter API
-consumer_key = "99Hpg1VQE6Q4ZxDC74y0qeRIa"
-consumer_secret = "G1Yfbr1nDP1UBcE5oSwIEuHWzDf3IAhOV0SLY2Ld5z8Jy9SkKo"
-access_token = "1598622610740465664-MdwNe0dQCrrVvblbgRHri6QTwFd1Hm"
-access_token_secret = "kDRFjz8yk09DdgmdEYVplYqnhtWRJmEF3S8uYnhMjpnqo"
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAJLpjwEAAAAArtodUEnDtq1m75I4hYaoYbHACCI%3D9R8iaWrLCNONjWO7ov8qTlNmWoRIdueqXf9nUJI4V9hqwaZiHH"
+# Twitter API (credentials come from environment variables; see .env.example)
+consumer_key = os.environ.get("TWITTER_CONSUMER_KEY", "")
+consumer_secret = os.environ.get("TWITTER_CONSUMER_SECRET", "")
+access_token = os.environ.get("TWITTER_ACCESS_TOKEN", "")
+access_token_secret = os.environ.get("TWITTER_ACCESS_TOKEN_SECRET", "")
+bearer_token = os.environ.get("TWITTER_BEARER_TOKEN", "")
 
 try:
     client = tweepy.Client(bearer_token=bearer_token,
@@ -31,8 +32,8 @@ except tweepy.errors.Unauthorized as e:
     logger.error('Twitter API is unreachable: %s', e)
 
 # Telegram API
-api_token = '5654463762:AAGsuzYgWh9qU6ZZm3md1Ag1wWGCWUpV-P0'
-chat_id = '-1001817324728'
+api_token = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
 api_url = f'https://api.telegram.org/bot{api_token}/sendMessage'
 
 database = Database("sqlite:///utils/data.db")

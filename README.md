@@ -17,3 +17,6 @@ The system monitors water levels using sensors. When the water level crosses a t
 
 ## Purpose
 To help in early detection of floods and reduce damage.
+
+## Configuration
+API credentials are read from environment variables, never from the code. Copy `.env.example`, fill in your own Twitter/X and Telegram values, and export them before running `python main.py`. Local runtime files (`*.db`, `*.log`, `__pycache__/`) are git-ignored.
